@@ -2,9 +2,9 @@
     <div class="card-container">
         <div class="contanier">
             <img :src="poster" :alt="`image of ${title}`" />
-            <div class="title">{{title}}</div>
-            <div class="author">{{author}}</div>
-            <div class="year">{{year}}</div>
+            <div class="title"><h5>{{title}}</h5></div>
+            <span class="author">{{author}}</span>
+            <span class="year">{{year}}</span>
         </div>
     </div>    
 </template>
@@ -13,7 +13,7 @@
 <script>
 export default {
     name: 'Card',
-    props:{
+    props:{ // ci mettiamo in ascolto e chiediamo di inviarci l'oggento con la proprieta
         poster: String,
         title: String,
         author: String,
@@ -25,21 +25,28 @@ export default {
 <style lang="scss" scoped>
     .card-container{
         text-align: center;
-        background:rgb(14, 60, 104);
         color:white;
         .contanier{
-            padding: 15px;
+            background: #2e3a46;
+            padding: 20px;
+            height: 100%;
             img{
                 width: 100%;
             }
             .title{
-                font-size: 25px;
+                padding: 15px;
+                line-height: 20px;
+                h5{
+                    font-size: 25px;
+                    
+                }
             }
             .author{
-                color: grey;
+                color: #808080;
             }
             .year{
-                 color: grey;
+                color: #808080;
+                display: block;
             }
 
         }
