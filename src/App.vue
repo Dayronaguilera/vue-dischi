@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header />
-    <Main :albums="albums" /> <!--in questo casa mandiamo il nostro array nel main -->
+    <Main @search="searchGenere" :inputSearch="inputSearch" :albums="filteredAlbums" /> <!--in questo casa mandiamo il nostro array nel main -->
     
   </div>
 </template>
@@ -20,13 +20,39 @@ export default {
    data() {
     return { //mettiamo return cosi ci restituisce un array da poter richiamare altrove
       albums:[], //creiamo un array che si popolera con la nostra chiamata api
+      inputSearch: ''
     }
   },
   created() { //facciamo la nostra chiamata Api
     axios.get('https://flynn.boolean.careers/exercises/api/array/music').then((result) => {
       this.albums = result.data.response //(element).data.(array che ci serve)
+      this.searchGenere('')
     })
-  }
+  },
+  computed: {
+    filteredAlbums() {
+
+      // elements è una lista di elementi in cui deve cercare "search"
+      function searchIn(search, elements) {
+        let exists = false;
+        elements.forEach((element) => {
+          if(element.includes(search)) {
+            exists = true;
+          }
+        });
+        return exists;
+      }
+      if(this.inputSearch.length === 0) {
+        return this.albums
+      } 
+      return this.albums.filter((element) => {
+
+        return searchIn(this.inputSearch,[element.genre])
+
+      })
+    }  
+  }, 
+  
 }
 </script>
 
